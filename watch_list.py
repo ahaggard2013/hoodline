@@ -8,27 +8,29 @@ from stock import stock
 
 class watch_list:
 
-    list = []
+    ulist = []
 
     def __init__(self):
-        try:
-            with open('list_data.pkl', 'rb') as input:
-                while True:
-                    try:
-                        list.append(pickle.load(input))
-                    except EOFError:
-                        break
-        except IOError:
-            print 'No tickers on watch!'
+        self.update_list()
 
     def add_ticker(self, ticker):
-        stock = stock(ticker)
-        if stocks is False:
-            return False 
-        with open('list_data.pkl', 'wb') as output:
-            pickle.dump(stock, output, pickle.HIGHEST_PROTOCOL)
+        stocks = stock(ticker)
+        if stocks.valid is False:
+            return False
+        self.ulist.append(stocks)
         print('Symbol: %s has been added to watchlist!' % ticker)
 
     def print_list(self):
-        for stocks in list:
-            print(stocks.get_ask_price()+ '\n')
+        for stocks in self.ulist:
+            print("%s: %f" % (stocks.get_ticker(), stocks.get_ask_price()))
+
+    def update_list(self):
+        try:
+            with open('list_data.pkl', 'rb') as input:
+                self.ulist = pickle.load(input)
+        except IOError:
+            print 'No tickers on watch!'
+
+    def save_list(self):
+        with open('list_data.pkl', 'wb') as output:
+            pickle.dump(self.ulist, output, pickle.HIGHEST_PROTOCOL)

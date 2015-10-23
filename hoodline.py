@@ -1,6 +1,7 @@
 from Robinhood import Robinhood
-import getpass
 from main_ui import main_ui
+import getpass
+import sys
 
 def login():
     username = raw_input('Login: ')
@@ -13,7 +14,7 @@ def login():
     return trader
 
 def menu():
-    ui = main_ui()
+    main_ui()
 
 def main():
     trader = login()

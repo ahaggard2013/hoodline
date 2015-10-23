@@ -18,7 +18,6 @@ class main_ui:
         os.system('clear')
         print('     1)  watch list' + '\n')
         choice = raw_input('|>> ')
-        import pdb; pdb.set_trace()
         self.run_menu(choice, menu_actions)
 
     def run_menu(self, choice, menu_actions):
