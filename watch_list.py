@@ -1,5 +1,6 @@
 import pickle
 from stock import stock
+from bcolors import bcolors
 
 ###############################################
 ##Stores stocks in a list for you to referece##
@@ -21,8 +22,14 @@ class watch_list:
         print('Symbol: %s has been added to watchlist!' % ticker)
 
     def print_list(self):
+        color = bcolors()
         for stocks in self.ulist:
-            print("%s: %f" % (stocks.get_ticker(), stocks.get_ask_price()))
+            ask_price = stocks.get_ask_price()
+            close = stocks.get_prev_close()
+            if (ask_price > close):
+                print("%s: Price: %s%f (%.2f%%)%s" % (stocks.get_ticker(), color.OKGREEN, ask_price, (((ask_price - close) / close) * 100),color.ENDC))
+            else: 
+                print("%s: Price: %s%f (%.2f%%)%s" % (stocks.get_ticker(), color.FAIL, ask_price, (((ask_price - close) / close) * 100),color.ENDC))
 
     def update_list(self):
         try:
