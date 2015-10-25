@@ -18,6 +18,10 @@ class watch_list:
         stocks = stock(ticker)
         if stocks.valid is False:
             return False
+        if self.in_list(stocks):
+            print('Symbol: %s is already in your list!' % ticker)
+            raw_input("Press Enter to continue...")
+            return False
         self.ulist.append(stocks)
         print('Symbol: %s has been added to watchlist!' % ticker)
         raw_input("Press Enter to continue...")
@@ -38,9 +42,9 @@ class watch_list:
             ask_price = stocks.get_ask_price()
             close = stocks.get_prev_close()
             if (ask_price > close):
-                print("%s: Price: %s%f (%.2f%%)%s" % (stocks.get_ticker(), color.OKGREEN, ask_price, (((ask_price - close) / close) * 100),color.ENDC))
+                print("%s: Price: %s%.2f (%.2f%%)%s" % (stocks.get_ticker(), color.OKGREEN, ask_price, (((ask_price - close) / close) * 100),color.ENDC))
             else: 
-                print("%s: Price: %s%f (%.2f%%)%s" % (stocks.get_ticker(), color.FAIL, ask_price, (((ask_price - close) / close) * 100),color.ENDC))
+                print("%s: Price: %s%.2f (%.2f%%)%s" % (stocks.get_ticker(), color.FAIL, ask_price, (((ask_price - close) / close) * 100),color.ENDC))
         raw_input("Press Enter to continue...")
 
     def update_list(self):
@@ -53,3 +57,9 @@ class watch_list:
     def save_list(self):
         with open('list_data.pkl', 'wb') as output:
             pickle.dump(self.ulist, output, pickle.HIGHEST_PROTOCOL)
+
+    def in_list(self, stock_check):
+        for stocks in self.ulist:
+            if (stocks.get_ticker() == stock_check.get_ticker()):
+                return True
+        return False
