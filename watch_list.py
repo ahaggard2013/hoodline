@@ -20,6 +20,17 @@ class watch_list:
             return False
         self.ulist.append(stocks)
         print('Symbol: %s has been added to watchlist!' % ticker)
+        raw_input("Press Enter to continue...")
+
+    def remove_ticker(self, ticker):
+        for stocks in self.ulist:
+            if (ticker == stocks.get_ticker()):
+                self.ulist.remove(stocks)
+                print('Symbol: %s has been removed from  watchlist!' % ticker)
+                raw_input("Press Enter to continue...")
+                return True
+        print('Symbol: %s is not in watchlist!' % ticker)
+        raw_input("Press Enter to continue...")
 
     def print_list(self):
         color = bcolors()
@@ -30,6 +41,7 @@ class watch_list:
                 print("%s: Price: %s%f (%.2f%%)%s" % (stocks.get_ticker(), color.OKGREEN, ask_price, (((ask_price - close) / close) * 100),color.ENDC))
             else: 
                 print("%s: Price: %s%f (%.2f%%)%s" % (stocks.get_ticker(), color.FAIL, ask_price, (((ask_price - close) / close) * 100),color.ENDC))
+        raw_input("Press Enter to continue...")
 
     def update_list(self):
         try:
