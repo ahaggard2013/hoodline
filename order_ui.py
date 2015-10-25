@@ -1,32 +1,23 @@
-import watch_list
-from watch_list_ui import watch_list_ui
-from orders_ui import orders_ui
 import sys, os
+from threading import Thread
+from order import order
+class orders_ui:
 
-
-class main_ui:
+    ol = None
+    exit = None
 
     def __init__(self):
-        #######################
-        ## MENUS DEFINITIONS ##
-        #######################
+        self.exit = False
         menu_actions = {
                         'main': self.main_menu,
-                        '1': orders_ui,
-                        '2': watch_list_ui,
-                        '3': self.exit,}
+                        '1': self.market_order,}
         self.main_menu(menu_actions)
 
     def main_menu(self, menu_actions):
         os.system('clear')
-        print('     1)  orders')
-        print('     2)  watch list')
-        print('     3)  exit')
+        print('     1)  Market Order')
         choice = raw_input('|>> ')
         self.run_menu(choice, menu_actions)
-
-    def exit(self):
-        sys.exit(0)
 
     def run_menu(self, choice, menu_actions):
         if choice == '':
@@ -34,8 +25,12 @@ class main_ui:
         else:
             try:
                 menu_actions[choice]()
-                menu_actions['main'](menu_actions)
+                if self.exit is False:
+                    menu_actions['main'](menu_actions)
             except KeyError:
                 print('Invalid Selection: %s' % choice)
                 menu_actions['main'](menu_actions)
         return
+
+    def market_order(self):
+        morder = order()
