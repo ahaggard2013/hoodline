@@ -11,14 +11,19 @@ class main_ui:
         #######################
         menu_actions = {
                         'main': self.main_menu,
-                        '1': watch_list_ui,}
+                        '1': watch_list_ui,
+                        '2': self.exit,}
         self.main_menu(menu_actions)
 
     def main_menu(self, menu_actions):
         os.system('clear')
-        print('     1)  watch list' + '\n')
+        print('     1)  watch list')
+        print('     2)  exit')
         choice = raw_input('|>> ')
         self.run_menu(choice, menu_actions)
+
+    def exit(self):
+        sys.exit(0)
 
     def run_menu(self, choice, menu_actions):
         if choice == '':
