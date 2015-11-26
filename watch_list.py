@@ -15,7 +15,7 @@ class watch_list:
         self.update_list()
 
     def add_ticker(self, ticker):
-        stocks = stock(ticker)
+        stocks = stock(ticker.upper())
         if stocks.valid is False:
             return False
         if self.in_list(stocks):
@@ -28,7 +28,7 @@ class watch_list:
 
     def remove_ticker(self, ticker):
         for stocks in self.ulist:
-            if (ticker == stocks.get_ticker()):
+            if (ticker.upper() == stocks.get_ticker()):
                 self.ulist.remove(stocks)
                 print('Symbol: %s has been removed from  watchlist!' % ticker)
                 raw_input("Press Enter to continue...")
@@ -39,6 +39,7 @@ class watch_list:
     def print_list(self):
         color = bcolors()
         for stocks in self.ulist:
+            stocks.update_price()
             ask_price = stocks.get_ask_price()
             close = stocks.get_prev_close()
             if (ask_price > close):

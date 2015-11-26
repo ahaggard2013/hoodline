@@ -29,3 +29,8 @@ class stock:
 
     def get_ticker(self):
         return self.ticker
+
+    def update_price(self):
+        robinhood = Robinhood()
+        self.current_ask_price = float(str(robinhood.ask_price(self.ticker)))
+        self.prev_close = float(str(robinhood.previous_close(self.ticker)))
