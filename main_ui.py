@@ -19,7 +19,7 @@ class main_ui:
 
     def main_menu(self, menu_actions):
         os.system('clear')
-        print('     1)  orders')
+        print('     1)  create orders')
         print('     2)  watch list')
         print('     3)  exit')
         choice = raw_input('|>> ')
